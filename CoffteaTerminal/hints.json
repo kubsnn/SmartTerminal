@@ -1,0 +1,6 @@
+﻿{
+  "string-extractor": [ "--help", "--ignore-case", "--pattern=", "--min-length=", "--offset=", "--char-diff=", "--iterate" ],
+  "ads-finder": [ "--help", "--ignore-zone", "--path=" ],
+  "excel-extractor": [ "--help" ],
+  "binarywalk.py": [ "b64", "encryptor", "only_cits", "simple_search", "mime" ]
+}

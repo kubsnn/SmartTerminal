@@ -14,10 +14,12 @@ namespace Cofftea
     {
         ProcessStartInfo info;
         Stopwatch stopwatch;
-        public ScriptExecutor(Command cmd)
+        bool redirect;
+        public ScriptExecutor(Command cmd, bool redirect = false)
         {
+            this.redirect = redirect;
             string path = cmd.Base;
-            string args = string.Join(' ', cmd.Args) + " " + cmd.RawLine;
+            string args = cmd.ToString().Substring(cmd.Base.Length);
             stopwatch = new Stopwatch();
             if (path.EndsWith(".py")) {
                 Load(path, args);
@@ -48,8 +50,16 @@ namespace Cofftea
         }
         public void Execute()
         {
+            SetRedirect(redirect);
+
+            if (redirect) {
+                ExecuteRedirected();
+                return;
+            }
+
             stopwatch.Start();
             var p = Process.Start(info);
+            
             p.WaitForExit();
             stopwatch.Stop();
 
@@ -58,6 +68,21 @@ namespace Cofftea
             cs.Add($"{stopwatch.ElapsedMilliseconds:N0}", ConsoleColor.Yellow);
             cs.AddLine(" ms");
             cs.Print();
+        }
+        public void ExecuteRedirected()
+        {
+            SetRedirect(true);
+
+            var p = Process.Start(info);
+            p.WaitForExit();
+
+            CoffeeString.Write(p.StandardOutput.ReadToEnd());
+        }
+        void SetRedirect(bool flag)
+        {
+            info.RedirectStandardInput = flag;
+            info.RedirectStandardOutput = flag;
+            info.RedirectStandardError = flag;
         }
     }
 }

@@ -14,10 +14,10 @@ namespace Cofftea
         public CtfShell()
         {
             CoffeeString.Prefix = @"@:\Cofftea\> ";
-            input = new Input(HandleCommand);
+            input = new Input(HandleCommandRedirected);
             //CoffeeString.InstantPrint = true;
         }
-
+        void HandleCommandRedirected(Command cmd) => HandleCommand(cmd, true);
         public void Start()
         {
 
@@ -37,7 +37,7 @@ namespace Cofftea
                 }
             }
         }
-        void HandleCommand(Command cmd)
+        void HandleCommand(Command cmd, bool redirect = false)
         {
             if (string.IsNullOrWhiteSpace(cmd.Base) || cmd.Base == "INSERT") return;
 
@@ -54,7 +54,7 @@ namespace Cofftea
             }
 
             if (BasicCommandHandler.CheckCmd(cmd)) {
-                BasicCommandHandler.RunCmd(cmd);
+                BasicCommandHandler.RunCmd(cmd, redirect);
                 return;
             }
             Messages.UnknownCommand(cmd.Base).Print();

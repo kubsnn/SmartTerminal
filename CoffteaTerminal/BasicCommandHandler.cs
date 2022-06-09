@@ -23,28 +23,24 @@ namespace Cofftea
             else if (cmd.Base == "exit") Environment.Exit(0);
             else if (cmd.Base == "reload") Settings.Reload();
         }
+
         public static bool CheckCmd(Command cmd)
         {
             string command = cmd.Base.ToLower();
             return command == "cmd" || command == "powershell";
         }
-        public static void RunCmd(Command cmd)
+        public static void RunCmd(Command cmd, bool redirect)
         {
             if (cmd.Base == "cmd") cmd.Base = Path.Combine(Environment.SystemDirectory, "cmd.exe");
             else cmd.Base = Path.Combine(Environment.SystemDirectory, @"WindowsPowerShell\v1.0\powershell.exe");
             
             
-            var executor = new ScriptExecutor(cmd);
+            var executor = new ScriptExecutor(cmd, redirect);
             executor.Execute();
         }
         static void Echo(Command cmd)
         {
-            CoffeeString.Write("'");
-            foreach (string arg in cmd.Args) {
-                CoffeeString.Write(arg + " ");
-            }
-            CoffeeString.Write("'");
-            CoffeeString.WriteLine();
+            CoffeeString.WriteLine(cmd.ToString().Substring(5).Trim());
         }
         static void ChangeDir(List<string> args)
         {

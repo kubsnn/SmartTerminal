@@ -1,6 +1,7 @@
 ﻿{
   "string-extractor": [ "--help", "--ignore-case", "--pattern=", "--min-length=", "--offset=", "--char-diff=", "--iterate" ],
-  "ads-finder": [ "--help", "--ignore-zone", "--path=" ],
+  "ads-finder": [ "--help", "--ignore-zone" ],
   "excel-extractor": [ "--help" ],
-  "binarywalk.py": [ "b64", "encryptor", "only_cits", "simple_search", "mime" ]
+  "binarywalk.py": [ "b64", "encryptor", "only_cits", "simple_search", "mime" ],
+  "string":  [ "--help", "--all", "--length=", "--count=", "--lowercase", "--uppercase", "--digits", "--special" ]
 }

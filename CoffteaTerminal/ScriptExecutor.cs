@@ -50,6 +50,8 @@ namespace Cofftea
         }
         public void Execute()
         {
+            bool prev = Console.CursorVisible;
+            Console.CursorVisible = true;
             SetRedirect(redirect);
 
             if (redirect) {
@@ -68,6 +70,7 @@ namespace Cofftea
             cs.Add($"{stopwatch.ElapsedMilliseconds:N0}", ConsoleColor.Yellow);
             cs.AddLine(" ms");
             cs.Print();
+            Console.CursorVisible = prev;
         }
         public void ExecuteRedirected()
         {
@@ -84,5 +87,5 @@ namespace Cofftea
             info.RedirectStandardOutput = flag;
             info.RedirectStandardError = flag;
         }
-    }
+    } 
 }

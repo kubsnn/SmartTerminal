@@ -40,7 +40,10 @@ namespace Cofftea
         }
         static void Echo(Command cmd)
         {
-            CoffeeString.WriteLine(cmd.ToString().Substring(5).Trim());
+            if (cmd.RawLine.Count(x => x == '%') > 1)
+                CoffeeString.WriteLine(cmd.ToString().Substring(5).Trim());
+            else 
+                CoffeeString.WriteLine(cmd.RawLine.Substring(5).Trim());
         }
         static void ChangeDir(List<string> args)
         {

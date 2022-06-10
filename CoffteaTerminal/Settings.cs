@@ -16,6 +16,8 @@ namespace Cofftea
         static Input input;
         public static void Load()
         {
+            Program.Handlers = new List<Program.CommandHandler>();
+            LoadHandlers();
             Console.CancelKeyPress += (sender, e) => {
                 e.Cancel = true;
             };
@@ -60,7 +62,10 @@ namespace Cofftea
 
             CoffeeString.TempCommands["nearby"] = files;
         }
-
+        static void LoadHandlers()
+        {
+            Program.Handlers.Add(scripts.StringGenerator.Handle);
+        }
         static void __Handler(Command _) { }
     }
 }
